@@ -12,12 +12,14 @@ async function main() {
   try {
     const token = core.getInput("ghToken");
     const githubClient = new github.GitHub(token);
+    console.log("token", token);
 
     const contextPayload = github.context.payload;
 
     const endpointOptions = githubClient.pulls.listFiles.endpoint.merge({
       owner: contextPayload.repository.owner.login,
       repo: contextPayload.repository.name,
+      pull_number: 2,
       pull_number: contextPayload.pull_request.number,
     });
 
