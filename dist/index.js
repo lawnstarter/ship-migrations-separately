@@ -23,14 +23,17 @@ async function main() {
 
     let hasFileWithDropInName = false;
 
-    const files = await githubClient.paginate(endpointOptions, (response) =>
+    const files = await githubClient.paginate(endpointOptions, (response) => {
+      console.log("----------------------");
+      console.log(response);
+      console.log("----------------------");
       response.data.map((file) => {
         if (file.filename.indexOf("drop_") !== -1) {
           hasFileWithDropInName = true;
         }
         return file.filename;
-      })
-    );
+      });
+    });
 
     let hasMoreThanOneFile = files.length > 1;
 
