@@ -20,8 +20,10 @@ async function main() {
       owner: contextPayload.repository.owner.login,
       repo: contextPayload.repository.name,
       pull_number: 2,
-      pull_number: contextPayload.pull_request.number,
+      // pull_number: contextPayload.pull_request.number,
     });
+
+    console.log("contextPayload", contextPayload);
 
     let hasFileWithDropInName = false;
 
