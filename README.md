@@ -1,1 +1,1 @@
-# fail-on-drop
+# ship-migrations-separately
