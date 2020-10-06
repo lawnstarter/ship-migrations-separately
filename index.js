@@ -3,44 +3,44 @@ const github = require("@actions/github");
 
 async function main() {
   try {
-    const token = core.getInput("ghToken");
+    const token = core.getInput("token");
+    const pull_number = core.getInput("pull-number");
+    const migration_directory = core.getInput("migration-directory");
     const githubClient = new github.GitHub(token);
-    console.log("token", token);
 
     const contextPayload = github.context.payload;
-    console.log("event?", github.event);
-    console.log("github", github);
 
     const endpointOptions = githubClient.pulls.listFiles.endpoint.merge({
       owner: contextPayload.repository.owner.login,
       repo: contextPayload.repository.name,
-      pull_number: 2,
-      // pull_number: contextPayload.pull_request.number,
+      pull_number,
     });
 
-    console.log("contextPayload", contextPayload);
-
-    let hasFileWithDropInName = false;
+    let hasOneOrMoreMigration = false;
+    let hasOtherChange = false;
 
     const files = await githubClient.paginate(endpointOptions, (response) => {
-      console.log("----------------------");
-      console.log(response);
-      console.log("----------------------");
       response.data.map((file) => {
-        if (file.filename.indexOf("drop_") !== -1) {
-          hasFileWithDropInName = true;
+        if (file.filename.indexOf(migration_directory) !== -1) {
+          hasOneOrMoreMigration = true;
+        } else {
+          hasOtherChange = true;
         }
+
         return file.filename;
       });
     });
 
-    let hasMoreThanOneFile = files.length > 1;
-
-    if (hasFileWithDropInName && hasMoreThanOneFile) {
-      core.setFailed("uh oh - you dropped something");
+    if (hasOneOrMoreMigration && hasOtherChange) {
+      core.setFailed(
+        "This PR contains migrations and other changes. Migrations must be shipped independently."
+      );
+    } else {
+      core.setOutput(
+        "Either the PR contains no migrations or only migrations.",
+        JSON.stringify(files)
+      );
     }
-
-    core.setOutput("files", JSON.stringify(files));
   } catch (error) {
     core.setFailed(error.message);
   }

@@ -1,10 +1,19 @@
-name: "Fail on drop"
-description: "Fail on drop"
+name: "Ship migrations separately"
+description: "Fails if migrations are included in the PR alongside other changes"
 inputs:
-  ghToken:
-    description: "The github token"
+  token:
+    description: "The GitHub token"
     default: ${{ github.token }}
     required: true
+  pull-number:
+    description: "The PR number"
+    default: ${{ github.event.number }}
+  migration-directory:
+    description: "The migration directory to look for"
+    default: "database/migrations"
 runs:
   using: "node12"
   main: "dist/index.js"
+branding:
+  icon: "slash"
+  color: "gray-dark"
