@@ -15,6 +15,8 @@ async function main() {
     console.log("token", token);
 
     const contextPayload = github.context.payload;
+    console.log("event?", github.event);
+    console.log("github", github);
 
     const endpointOptions = githubClient.pulls.listFiles.endpoint.merge({
       owner: contextPayload.repository.owner.login,
