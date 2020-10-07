@@ -17,6 +17,8 @@ async function main() {
 
     const contextPayload = github.context.payload;
 
+    console.log("pull_number", pull_number);
+
     const endpointOptions = githubClient.pulls.listFiles.endpoint.merge({
       owner: contextPayload.repository.owner.login,
       repo: contextPayload.repository.name,
