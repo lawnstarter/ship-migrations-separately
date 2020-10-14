@@ -5,6 +5,7 @@ module.exports =
 /***/ 748:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
+const { getOctokit } = __webpack_require__(102);
 const core = __webpack_require__(893);
 const github = __webpack_require__(102);
 
@@ -12,7 +13,7 @@ async function main() {
   try {
     const token = core.getInput("token");
     const migration_directory = core.getInput("migration-directory");
-    const githubClient = new github.GitHub(token);
+    const githubClient = getOctokit(token);
 
     const githubContext = github.context;
     const pullRequest = githubContext.issue;

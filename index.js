@@ -1,3 +1,4 @@
+const { getOctokit } = require("@actions/github/lib/github");
 const core = require("@actions/core");
 const github = require("@actions/github");
 
@@ -5,7 +6,7 @@ async function main() {
   try {
     const token = core.getInput("token");
     const migration_directory = core.getInput("migration-directory");
-    const githubClient = new github.GitHub(token);
+    const githubClient = getOctokit(token);
 
     const githubContext = github.context;
     const pullRequest = githubContext.issue;
