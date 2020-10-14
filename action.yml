@@ -5,9 +5,6 @@ inputs:
     description: "The GitHub token"
     default: ${{ github.token }}
     required: true
-  pull-number:
-    description: "The PR number"
-    default: ${{ github.event.number }}
   migration-directory:
     description: "The migration directory to look for"
     default: "database/migrations"
