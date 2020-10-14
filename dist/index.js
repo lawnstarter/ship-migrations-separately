@@ -18,6 +18,15 @@ async function main() {
     const githubContext = github.context;
     const pullRequest = githubContext.issue;
 
+    console.log("githubContext", githubContext);
+    console.log("githubClient", githubClient);
+
+    console.log({
+      owner: pullRequest.owner,
+      repo: pullRequest.repo,
+      pull_number: pullRequest.number,
+    });
+
     const endpointOptions = githubClient.pulls.listFiles.endpoint.merge({
       owner: pullRequest.owner,
       repo: pullRequest.repo,

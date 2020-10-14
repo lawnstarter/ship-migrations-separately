@@ -1,6 +1,6 @@
 {
   "name": "ship-migrations-separately",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "index.js",
   "scripts": {
     "build": "ncc build index.js --license license.txt"
