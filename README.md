@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Ship Migrations Separately
     steps:
-      - uses: lfkwtz/ship-migrations-separately@0.0.11
+      - uses: lawnstarter/ship-migrations-separately@0.1.0
         with:
           token: ${{ secrets.TOKEN_GH }}
 
