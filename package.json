@@ -1,9 +1,9 @@
 {
   "name": "ship-migrations-separately",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "index.js",
   "scripts": {
-    "build": "ncc build index.js --license license.txt"
+    "build": "npx @vercel/ncc build index.js --license license.txt"
   },
   "license": "MIT",
   "dependencies": {
