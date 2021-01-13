@@ -2,12 +2,35 @@
   "name": "ship-migrations-separately",
   "version": "0.0.12",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "build": "npx @vercel/ncc build index.js --license license.txt"
+    "build": "npx @vercel/ncc build index.js --license license.txt",
+    "cm": "git cz"
   },
   "license": "MIT",
   "dependencies": {
     "@actions/core": "1.2.6",
     "@actions/github": "4.0.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^9.1.2",
+    "commitizen": "^3.1.2",
+    "cz-ls-commits": "^1.1.0",
+    "husky": "^3.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-ls-commits"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "./node_modules/cz-ls-commits/commitlint"
+    ]
   }
 }
