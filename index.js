@@ -24,6 +24,8 @@ async function main() {
       response.data.map((file) => {
         if (file.filename.indexOf(migration_directory) !== -1) {
           hasOneOrMoreMigration = true;
+        } else if (file.filename.indexOf("tests/") !== -1) {
+          // do nothing - we want to let test changes through
         } else {
           hasOtherChange = true;
         }
