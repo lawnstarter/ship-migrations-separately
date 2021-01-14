@@ -1,13 +1,12 @@
 {
   "name": "ship-migrations-separately",
-  "version": "0.0.12",
+  "version": "0.1.1",
   "main": "index.js",
   "private": true,
   "scripts": {
     "build": "npx @vercel/ncc build index.js --license license.txt",
     "cm": "git cz"
   },
-  "license": "MIT",
   "dependencies": {
     "@actions/core": "1.2.6",
     "@actions/github": "4.0.0"
