@@ -1,6 +1,7 @@
 const { getOctokit } = require("@actions/github/lib/github");
 const core = require("@actions/core");
 const github = require("@actions/github");
+const { mixesMigrationsWithOtherChanges } = require("./mixed-changes");
 
 async function main() {
   try {
@@ -17,24 +18,11 @@ async function main() {
       pull_number: pullRequest.number,
     });
 
-    let hasOneOrMoreMigration = false;
-    let hasOtherChange = false;
+    const files = await githubClient.paginate(endpointOptions, (response) =>
+      response.data.map((file) => file.filename)
+    );
 
-    const files = await githubClient.paginate(endpointOptions, (response) => {
-      response.data.map((file) => {
-        if (file.filename.indexOf(migration_directory) !== -1) {
-          hasOneOrMoreMigration = true;
-        } else if (file.filename.indexOf("tests/") !== -1) {
-          // do nothing - we want to let test changes through
-        } else {
-          hasOtherChange = true;
-        }
-
-        return file.filename;
-      });
-    });
-
-    if (hasOneOrMoreMigration && hasOtherChange) {
+    if (mixesMigrationsWithOtherChanges(files, migration_directory)) {
       core.setFailed(
         "This PR contains migrations and other changes. Migrations must be shipped independently."
       );

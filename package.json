@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "test": "node test.js",
     "build": "npx @vercel/ncc build index.js --license license.txt",
     "cm": "git cz"
   },
